@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ass">
+          <Key>
+            <PropertyRef Name="Assign_Id" />
+          </Key>
+          <Property Name="Assign_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Emp_Id" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Assign">
+          <Key>
+            <PropertyRef Name="Assign_Id" />
+          </Key>
+          <Property Name="Assign_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Request_Id" Type="int" Nullable="false" />
+          <Property Name="Manager_Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Dept_Id" Type="int" Nullable="false" />
+          <Property Name="Team_Id" Type="int" Nullable="false" />
+          <Property Name="Emp_Id" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dept">
+          <Key>
+            <PropertyRef Name="Dept_Id" />
+          </Key>
+          <Property Name="Dept_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dept_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Sr_No" />
+          </Key>
+          <Property Name="Sr_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Emp_Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="First_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Last_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contact_No" Type="bigint" Nullable="false" />
+          <Property Name="Dept_Id" Type="int" Nullable="false" />
+          <Property Name="Team_Id" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Release">
+          <Key>
+            <PropertyRef Name="Release_Id" />
+          </Key>
+          <Property Name="Release_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Emp_Id" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Request_Id" />
+          </Key>
+          <Property Name="Request_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Manager_Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Dept_Id" Type="int" Nullable="false" />
+          <Property Name="Team_Id" Type="int" Nullable="false" />
+          <Property Name="No_Of_Emps" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Team_Id" />
+          </Key>
+          <Property Name="Team_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dept_Id" Type="int" Nullable="false" />
+          <Property Name="Team_Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_ass_Employee' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_ass_Employee" />-->
+        <Association Name="FK_Assign_Dept">
+          <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+          <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Dept_Id" />
+            </Principal>
+            <Dependent Role="Assign">
+              <PropertyRef Name="Dept_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Assign_Employee' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Assign_Employee" />-->
+        <Association Name="FK_Assign_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
+          <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Request_Id" />
+            </Principal>
+            <Dependent Role="Assign">
+              <PropertyRef Name="Request_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Assign_Request1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Assign_Request1" />-->
+        <Association Name="FK_Assign_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Team_Id" />
+            </Principal>
+            <Dependent Role="Assign">
+              <PropertyRef Name="Team_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Dept">
+          <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Dept_Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Dept_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Team1">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Team_Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Team_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Release_Employee' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Release_Employee" />-->
+        <Association Name="FK_Request_Dept">
+          <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Dept_Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="Dept_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Team_Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="Team_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_Dept1">
+          <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Dept_Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="Dept_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WMSModelStoreContainer">
+          <EntitySet Name="ass" EntityType="Self.ass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Assign" EntityType="Self.Assign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dept" EntityType="Self.Dept" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Release" EntityType="Self.Release" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Assign_Dept" Association="Self.FK_Assign_Dept">
+            <End Role="Dept" EntitySet="Dept" />
+            <End Role="Assign" EntitySet="Assign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assign_Request" Association="Self.FK_Assign_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Assign" EntitySet="Assign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assign_Team" Association="Self.FK_Assign_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Assign" EntitySet="Assign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Dept" Association="Self.FK_Employee_Dept">
+            <End Role="Dept" EntitySet="Dept" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Team1" Association="Self.FK_Employee_Team1">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Dept" Association="Self.FK_Request_Dept">
+            <End Role="Dept" EntitySet="Dept" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Team" Association="Self.FK_Request_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_Dept1" Association="Self.FK_Team_Dept1">
+            <End Role="Dept" EntitySet="Dept" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Assign">
+          <Key>
+            <PropertyRef Name="Assign_Id" />
+          </Key>
+          <Property Name="Assign_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Request_Id" Type="Int32" Nullable="false" />
+          <Property Name="Manager_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dept_Id" Type="Int32" Nullable="false" />
+          <Property Name="Team_Id" Type="Int32" Nullable="false" />
+          <Property Name="Emp_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Dept" Relationship="Self.FK_Assign_Dept" FromRole="Assign" ToRole="Dept" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Assign_Request" FromRole="Assign" ToRole="Request" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Assign_Team" FromRole="Assign" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Dept">
+          <Key>
+            <PropertyRef Name="Dept_Id" />
+          </Key>
+          <Property Name="Dept_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dept_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Assigns" Relationship="Self.FK_Assign_Dept" FromRole="Dept" ToRole="Assign" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Dept" FromRole="Dept" ToRole="Employee" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Request_Dept" FromRole="Dept" ToRole="Request" />
+          <NavigationProperty Name="Teams" Relationship="Self.FK_Team_Dept1" FromRole="Dept" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Sr_No" />
+          </Key>
+          <Property Name="Sr_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Emp_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contact_No" Type="Int64" Nullable="false" />
+          <Property Name="Dept_Id" Type="Int32" Nullable="false" />
+          <Property Name="Team_Id" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Dept" Relationship="Self.FK_Employee_Dept" FromRole="Employee" ToRole="Dept" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Employee_Team1" FromRole="Employee" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Release">
+          <Key>
+            <PropertyRef Name="Release_Id" />
+          </Key>
+          <Property Name="Release_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Emp_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Request_Id" />
+          </Key>
+          <Property Name="Request_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Manager_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dept_Id" Type="Int32" Nullable="false" />
+          <Property Name="Team_Id" Type="Int32" Nullable="false" />
+          <Property Name="No_Of_Emps" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Assigns" Relationship="Self.FK_Assign_Request" FromRole="Request" ToRole="Assign" />
+          <NavigationProperty Name="Dept" Relationship="Self.FK_Request_Dept" FromRole="Request" ToRole="Dept" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Request_Team" FromRole="Request" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Team_Id" />
+          </Key>
+          <Property Name="Team_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dept_Id" Type="Int32" Nullable="false" />
+          <Property Name="Team_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assigns" Relationship="Self.FK_Assign_Team" FromRole="Team" ToRole="Assign" />
+          <NavigationProperty Name="Dept" Relationship="Self.FK_Team_Dept1" FromRole="Team" ToRole="Dept" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Team1" FromRole="Team" ToRole="Employee" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Request_Team" FromRole="Team" ToRole="Request" />
+        </EntityType>
+        <Association Name="FK_Assign_Dept">
+          <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+          <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Dept_Id" />
+            </Principal>
+            <Dependent Role="Assign">
+              <PropertyRef Name="Dept_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assign_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
+          <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Request_Id" />
+            </Principal>
+            <Dependent Role="Assign">
+              <PropertyRef Name="Request_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assign_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Team_Id" />
+            </Principal>
+            <Dependent Role="Assign">
+              <PropertyRef Name="Team_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Dept">
+          <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Dept_Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Dept_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Dept">
+          <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Dept_Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="Dept_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_Dept1">
+          <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Dept_Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="Dept_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Team1">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Team_Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Team_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Team_Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="Team_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WMSEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assigns" EntityType="Self.Assign" />
+          <EntitySet Name="Depts" EntityType="Self.Dept" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Releases" EntityType="Self.Release" />
+          <EntitySet Name="Requests" EntityType="Self.Request" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <AssociationSet Name="FK_Assign_Dept" Association="Self.FK_Assign_Dept">
+            <End Role="Dept" EntitySet="Depts" />
+            <End Role="Assign" EntitySet="Assigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assign_Request" Association="Self.FK_Assign_Request">
+            <End Role="Request" EntitySet="Requests" />
+            <End Role="Assign" EntitySet="Assigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assign_Team" Association="Self.FK_Assign_Team">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Assign" EntitySet="Assigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Dept" Association="Self.FK_Employee_Dept">
+            <End Role="Dept" EntitySet="Depts" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Dept" Association="Self.FK_Request_Dept">
+            <End Role="Dept" EntitySet="Depts" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_Dept1" Association="Self.FK_Team_Dept1">
+            <End Role="Dept" EntitySet="Depts" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Team1" Association="Self.FK_Employee_Team1">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Team" Association="Self.FK_Request_Team">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <EntitySet Name="asses" EntityType="WMSModel.ass" />
+        </EntityContainer>
+        <EntityType Name="ass">
+          <Key>
+            <PropertyRef Name="Assign_Id" />
+          </Key>
+          <Property Name="Assign_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Emp_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="WMSEntities1">
+          <EntitySetMapping Name="Assigns">
+            <EntityTypeMapping TypeName="WMSModel.Assign">
+              <MappingFragment StoreEntitySet="Assign">
+                <ScalarProperty Name="Assign_Id" ColumnName="Assign_Id" />
+                <ScalarProperty Name="Request_Id" ColumnName="Request_Id" />
+                <ScalarProperty Name="Manager_Id" ColumnName="Manager_Id" />
+                <ScalarProperty Name="Dept_Id" ColumnName="Dept_Id" />
+                <ScalarProperty Name="Team_Id" ColumnName="Team_Id" />
+                <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Depts">
+            <EntityTypeMapping TypeName="WMSModel.Dept">
+              <MappingFragment StoreEntitySet="Dept">
+                <ScalarProperty Name="Dept_Id" ColumnName="Dept_Id" />
+                <ScalarProperty Name="Dept_Name" ColumnName="Dept_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="WMSModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Sr_No" ColumnName="Sr_No" />
+                <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Contact_No" ColumnName="Contact_No" />
+                <ScalarProperty Name="Dept_Id" ColumnName="Dept_Id" />
+                <ScalarProperty Name="Team_Id" ColumnName="Team_Id" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Releases">
+            <EntityTypeMapping TypeName="WMSModel.Release">
+              <MappingFragment StoreEntitySet="Release">
+                <ScalarProperty Name="Release_Id" ColumnName="Release_Id" />
+                <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="WMSModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="Request_Id" ColumnName="Request_Id" />
+                <ScalarProperty Name="Manager_Id" ColumnName="Manager_Id" />
+                <ScalarProperty Name="Dept_Id" ColumnName="Dept_Id" />
+                <ScalarProperty Name="Team_Id" ColumnName="Team_Id" />
+                <ScalarProperty Name="No_Of_Emps" ColumnName="No_Of_Emps" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="WMSModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="Team_Id" ColumnName="Team_Id" />
+                <ScalarProperty Name="Dept_Id" ColumnName="Dept_Id" />
+                <ScalarProperty Name="Team_Name" ColumnName="Team_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="asses">
+            <EntityTypeMapping TypeName="WMSModel.ass">
+              <MappingFragment StoreEntitySet="ass">
+                <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+                <ScalarProperty Name="Assign_Id" ColumnName="Assign_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

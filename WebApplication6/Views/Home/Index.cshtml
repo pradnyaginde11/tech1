@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebApplication6.Models.Request>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>ASSIGNING</h2>
+<h3>PENDING REQUEST</h3>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Manager_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.No_Of_Emps)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dept.Dept_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Team.Team_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Manager_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.No_Of_Emps)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dept.Dept_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Team.Team_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Request_Id }) |
+            <!-- @Html.ActionLink("Details", "Details", new { id=item.Request_Id }) |
+                 @Html.ActionLink("Delete", "Delete", new { id=item.Request_Id })-->
+        </td>
+    </tr>
+}
+
+</table>

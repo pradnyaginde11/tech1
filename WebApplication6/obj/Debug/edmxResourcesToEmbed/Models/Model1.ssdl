@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ass">
+    <Key>
+      <PropertyRef Name="Assign_Id" />
+    </Key>
+    <Property Name="Assign_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emp_Id" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Assign">
+    <Key>
+      <PropertyRef Name="Assign_Id" />
+    </Key>
+    <Property Name="Assign_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Request_Id" Type="int" Nullable="false" />
+    <Property Name="Manager_Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Dept_Id" Type="int" Nullable="false" />
+    <Property Name="Team_Id" Type="int" Nullable="false" />
+    <Property Name="Emp_Id" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dept">
+    <Key>
+      <PropertyRef Name="Dept_Id" />
+    </Key>
+    <Property Name="Dept_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dept_Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Sr_No" />
+    </Key>
+    <Property Name="Sr_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emp_Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="First_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Last_Name" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contact_No" Type="bigint" Nullable="false" />
+    <Property Name="Dept_Id" Type="int" Nullable="false" />
+    <Property Name="Team_Id" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Release">
+    <Key>
+      <PropertyRef Name="Release_Id" />
+    </Key>
+    <Property Name="Release_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emp_Id" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="Request_Id" />
+    </Key>
+    <Property Name="Request_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Manager_Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Dept_Id" Type="int" Nullable="false" />
+    <Property Name="Team_Id" Type="int" Nullable="false" />
+    <Property Name="No_Of_Emps" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Team">
+    <Key>
+      <PropertyRef Name="Team_Id" />
+    </Key>
+    <Property Name="Team_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dept_Id" Type="int" Nullable="false" />
+    <Property Name="Team_Name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_ass_Employee' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_ass_Employee" />-->
+  <Association Name="FK_Assign_Dept">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="Dept_Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="Dept_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Assign_Employee' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Assign_Employee" />-->
+  <Association Name="FK_Assign_Request">
+    <End Role="Request" Type="Self.Request" Multiplicity="1" />
+    <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="Request_Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="Request_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Assign_Request1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Assign_Request1" />-->
+  <Association Name="FK_Assign_Team">
+    <End Role="Team" Type="Self.Team" Multiplicity="1" />
+    <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="Team_Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="Team_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Dept">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="Dept_Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Dept_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Team1">
+    <End Role="Team" Type="Self.Team" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="Team_Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Team_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Release_Employee' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Release_Employee" />-->
+  <Association Name="FK_Request_Dept">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="Dept_Id" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="Dept_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request_Team">
+    <End Role="Team" Type="Self.Team" Multiplicity="1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="Team_Id" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="Team_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Team_Dept1">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="Team" Type="Self.Team" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="Dept_Id" />
+      </Principal>
+      <Dependent Role="Team">
+        <PropertyRef Name="Dept_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WMSModelStoreContainer">
+    <EntitySet Name="ass" EntityType="Self.ass" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Assign" EntityType="Self.Assign" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dept" EntityType="Self.Dept" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Release" EntityType="Self.Release" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Assign_Dept" Association="Self.FK_Assign_Dept">
+      <End Role="Dept" EntitySet="Dept" />
+      <End Role="Assign" EntitySet="Assign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assign_Request" Association="Self.FK_Assign_Request">
+      <End Role="Request" EntitySet="Request" />
+      <End Role="Assign" EntitySet="Assign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assign_Team" Association="Self.FK_Assign_Team">
+      <End Role="Team" EntitySet="Team" />
+      <End Role="Assign" EntitySet="Assign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Dept" Association="Self.FK_Employee_Dept">
+      <End Role="Dept" EntitySet="Dept" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Team1" Association="Self.FK_Employee_Team1">
+      <End Role="Team" EntitySet="Team" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request_Dept" Association="Self.FK_Request_Dept">
+      <End Role="Dept" EntitySet="Dept" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request_Team" Association="Self.FK_Request_Team">
+      <End Role="Team" EntitySet="Team" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Team_Dept1" Association="Self.FK_Team_Dept1">
+      <End Role="Dept" EntitySet="Dept" />
+      <End Role="Team" EntitySet="Team" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

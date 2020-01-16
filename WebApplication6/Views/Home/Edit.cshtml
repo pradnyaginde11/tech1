@@ -1,0 +1,51 @@
+﻿@model WebApplication6.Models.Release
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Emp_Id)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Emp_Id)
+                </td>
+                <td>
+                    <!-- @Html.ActionLink("Edit", "Edit", new { id = item.Release_Id }) |
+                         @Html.ActionLink("Details", "Details", new { id = item.Release_Id }) |
+                         @Html.ActionLink("Delete", "Delete", new { id = item.Release_Id })-->
+                    
+                    @Html.CheckBox("IsChecked", false)
+                @Html.CheckBoxFor(Model => Model.IsChecked)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    foreach(var item in Model.Where(Model=> Model.IsChecked))
+    
+       // @Html.CheckBoxFor(m => Model.Releases[i].IsChecked)@ Model.Releases[i].Text@ Html.HiddenFor(m => Model.Releases[i].Value)@ Html.HiddenFor(m => Model.Releases[i].Text) 
+    
+    
+<div class="col-md-offset-3">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Assign" class="btn btn-default" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="btn btn-default" value="Back to list" onclick="location.href='@Url.Action("Index", "Home")'" />
+        </div>
+    </div>
+</div>
+}
